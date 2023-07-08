@@ -8,7 +8,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  deploy:
 
     runs-on: ubuntu-latest
 
@@ -33,6 +33,7 @@ jobs:
         TARGET: ${{ secrets.TARGET_FOR_PERSONAL_USE_AWS_EC2 }}
         SCRIPT_AFTER: |
           cd ${{ secrets.TARGET_FOR_PERSONAL_USE_AWS_EC2 }}
+          git pull
           npm install
-          npm run build --if-present
+          npm run build
 
