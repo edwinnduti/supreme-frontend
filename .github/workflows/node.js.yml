@@ -26,6 +26,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - name: Deploy to my EC2 instance
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY_FOR_PERSONAL_USE_AWS_EC2 }}
+        SOURCE: "./"
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST_FOR_PERSONAL_USE_AWS_EC2 }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER_FOR_PERSONAL_USE_AWS_EC2 }}
+        TARGET: ${{ secrets.TARGET_FOR_PERSONAL_USE_AWS_EC2 }}
+    - name: Install npm dependencies
+      run: npm install
+    - name: Run build task
+      run: npm run build --if-present
