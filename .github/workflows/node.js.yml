@@ -31,7 +31,8 @@ jobs:
         REMOTE_HOST: ${{ secrets.REMOTE_HOST_FOR_PERSONAL_USE_AWS_EC2 }}
         REMOTE_USER: ${{ secrets.REMOTE_USER_FOR_PERSONAL_USE_AWS_EC2 }}
         TARGET: ${{ secrets.TARGET_FOR_PERSONAL_USE_AWS_EC2 }}
-    - name: Install npm dependencies
-      run: npm install
-    - name: Run build task
-      run: npm run build --if-present
+        SCRIPT_AFTER: |
+          cd ${{ secrets.TARGET_FOR_PERSONAL_USE_AWS_EC2 }}
+          npm install
+          npm run build --if-present
+
